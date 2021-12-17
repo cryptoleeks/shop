@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.loveyx815.shop.dao.GoodsDao">
+  <resultMap id="BaseResultMap" type="cn.loveyx815.shop.dao.entity.GoodsEntity">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="img_url" jdbcType="VARCHAR" property="img_url" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="goods_no" jdbcType="VARCHAR" property="goods_no" />
+    <result column="stock_quantity" jdbcType="INTEGER" property="stock_quantity" />
+    <result column="market_price" jdbcType="DECIMAL" property="market_price" />
+    <result column="sell_price" jdbcType="DECIMAL" property="sell_price" />
+    <result column="status" jdbcType="BOOLEAN" property="status" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="add_time" />
+    <result column="gmtCreate" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmtModified" jdbcType="TIMESTAMP" property="gmtModified" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, img_url, title, content, goods_no, stock_quantity, market_price, sell_price, 
+    `status`, add_time, gmtCreate, gmtModified
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from goods
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="listByParam"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from goods
+    <where>
+      <if test="keyword != null or keyword != ''">
+        title like '%'||#{keyword}||'%'
+      </if>
+    </where>
+
+    order by add_time desc
+     limit #{offset},#{pageSize}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from goods
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.loveyx815.shop.dao.entity.GoodsEntity" useGeneratedKeys="true">
+    insert into goods (img_url, title, content, 
+      goods_no, stock_quantity, market_price, 
+      sell_price, `status`, add_time, 
+      gmtCreate, gmtModified)
+    values (#{img_url,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{goods_no,jdbcType=VARCHAR}, #{stock_quantity,jdbcType=INTEGER}, #{market_price,jdbcType=DECIMAL}, 
+      #{sell_price,jdbcType=DECIMAL}, #{status,jdbcType=BOOLEAN}, #{add_time,jdbcType=TIMESTAMP}, 
+      #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="cn.loveyx815.shop.dao.entity.GoodsEntity" useGeneratedKeys="true">
+    insert into goods
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="img_url != null">
+        img_url,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="goods_no != null">
+        goods_no,
+      </if>
+      <if test="stock_quantity != null">
+        stock_quantity,
+      </if>
+      <if test="market_price != null">
+        market_price,
+      </if>
+      <if test="sell_price != null">
+        sell_price,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="add_time != null">
+        add_time,
+      </if>
+      <if test="gmtCreate != null">
+        gmtCreate,
+      </if>
+      <if test="gmtModified != null">
+        gmtModified,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="img_url != null">
+        #{img_url,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="goods_no != null">
+        #{goods_no,jdbcType=VARCHAR},
+      </if>
+      <if test="stock_quantity != null">
+        #{stock_quantity,jdbcType=INTEGER},
+      </if>
+      <if test="market_price != null">
+        #{market_price,jdbcType=DECIMAL},
+      </if>
+      <if test="sell_price != null">
+        #{sell_price,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=BOOLEAN},
+      </if>
+      <if test="add_time != null">
+        #{add_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.loveyx815.shop.dao.entity.GoodsEntity">
+    update goods
+    <set>
+      <if test="img_url != null">
+        img_url = #{img_url,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="goods_no != null">
+        goods_no = #{goods_no,jdbcType=VARCHAR},
+      </if>
+      <if test="stock_quantity != null">
+        stock_quantity = #{stock_quantity,jdbcType=INTEGER},
+      </if>
+      <if test="market_price != null">
+        market_price = #{market_price,jdbcType=DECIMAL},
+      </if>
+      <if test="sell_price != null">
+        sell_price = #{sell_price,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=BOOLEAN},
+      </if>
+      <if test="add_time != null">
+        add_time = #{add_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null">
+        gmtCreate = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        gmtModified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.loveyx815.shop.dao.entity.GoodsEntity">
+    update goods
+    set img_url = #{img_url,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      goods_no = #{goods_no,jdbcType=VARCHAR},
+      stock_quantity = #{stock_quantity,jdbcType=INTEGER},
+      market_price = #{market_price,jdbcType=DECIMAL},
+      sell_price = #{sell_price,jdbcType=DECIMAL},
+      `status` = #{status,jdbcType=BOOLEAN},
+      add_time = #{add_time,jdbcType=TIMESTAMP},
+      gmtCreate = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmtModified = #{gmtModified,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

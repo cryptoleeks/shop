@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    username: root
+    password: shi626614916
+    url: jdbc:mysql://114.55.254.102:3306/shop?useUnicode=true&characterEncoding=utf-8&useSSL=true
+    driver-class-name: com.mysql.jdbc.Driver
+
+mybatis:
+  mapper-locations: classpath:mapper/*Dao.xml
+server:
+  port: 8020
